@@ -53,11 +53,23 @@ router.put('/:id', (req, res) => {
     .catch(err => {
         res.status(500).json(errorRef(err))
     })
-
 })
 
-router.delete('/', (req, res) => {
-
+router.delete('/:id', (req, res) => {
+    const {id} = req.params
+    const cohort = req.body
+    dbCohorts.remove(id)
+    .then(count => {
+        if(count){
+            const cohortunit = count > 1 ? 'cohorts': 'cohort';
+            res.status(200).json({message: `${count} ${cohortunit} deleted`, Cohortdeleted: cohort})
+        }else{
+            res.status(404).json({message: 'Cohort not found'})
+        }
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
 })
 
 // validation middleware
@@ -84,7 +96,6 @@ function validateBodyName(req, res, next) {
         res.send('name field required!')
     }
 }
-
 
 
 // error middleware

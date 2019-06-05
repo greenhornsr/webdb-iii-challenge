@@ -32,6 +32,8 @@ function update(id, changes) {
     .update(changes)
 } 
 
-function remove() {
-    return null
+function remove(id) {
+    return db('cohorts')
+    .where({id})
+    .delete()
 } 
