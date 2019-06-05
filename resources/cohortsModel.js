@@ -9,7 +9,7 @@ module.exports = {
 }
 
 function find (){
-    return null
+    return db('cohorts')
 } 
 
 function findById (){
