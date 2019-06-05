@@ -28,6 +28,19 @@ router.get('/:id', validateCohortID, (req, res) => {
     })
 })
 
+router.get('/:id/students', (req, res) => {
+    const {id} = req.params
+    dbCohorts.findStudentsInCohort(id)
+    .then(studentsinCohort => {
+        // console.log(cohort)
+        studentsinCohort ? res.status(200).json({success: true, message: `located`, studentsinCohort}):
+        res.status(404).json({success: false, message: `Sorry, no cohort with id of ${id} exists.`  })
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
+})
+
 router.post('/', validateBodyName, (req, res) => {
     const newCohort = req.body
     dbCohorts.add(newCohort)

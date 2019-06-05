@@ -1,8 +1,10 @@
 const db = require('../data/dbConfig');
 
+
 module.exports = {
     find,
     findById,
+    findStudentsInCohort,
     add,
     update,
     remove
@@ -17,6 +19,14 @@ function findById(id) {
     .where({id})
     .first()
 } 
+
+function findStudentsInCohort(id) {
+    return db.select('*')
+    .from('students')
+    .leftJoin('cohorts', `cohorts.id`, 'students.cohort_id')
+    .where('cohorts.id', id)
+}
+
 
 async function add(newCohort) {
     const [id] = await db('cohorts')
