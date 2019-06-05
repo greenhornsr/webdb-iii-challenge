@@ -25,8 +25,11 @@ async function add(newCohort) {
     return findById(id);
 } 
 
-function update() {
-    return null
+function update(id, changes) {
+    return db('cohorts')
+    .where({id})
+    .first()
+    .update(changes)
 } 
 
 function remove() {

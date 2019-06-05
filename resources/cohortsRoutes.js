@@ -42,6 +42,17 @@ router.post('/', validateBodyName, (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
+    const {id} = req.params
+    const changes = req.body
+    dbCohorts.update(id, changes)
+    .then(count => {
+        const unit = count > 1 ?'changes': 'change'
+        count ? res.status(200).json({success: true, message: `${count} ${unit} made`, changes}):
+        res.status(404).json({success: false, message: `${id} doesnt exist`})
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
 
 })
 
