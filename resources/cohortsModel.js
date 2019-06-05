@@ -21,7 +21,7 @@ function findById(id) {
 } 
 
 function findStudentsInCohort(id) {
-    return db.select('*')
+    return db.select('cohorts.*', 'students.*')
     .from('students')
     .leftJoin('cohorts', `cohorts.id`, 'students.cohort_id')
     .where('cohorts.id', id)
