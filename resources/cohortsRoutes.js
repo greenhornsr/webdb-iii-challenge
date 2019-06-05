@@ -28,8 +28,17 @@ router.get('/:id', validateCohortID, (req, res) => {
     })
 })
 
-router.post('/', (req, res) => {
-
+router.post('/', validateBodyName, (req, res) => {
+    const newCohort = req.body
+    dbCohorts.add(newCohort)
+    .then(count => {
+        const unit = count > 1 ? 'cohorts': 'cohort';
+        count ? res.status(201).json({success: true, message: `${newCohort.name} ${unit} created`, newCohort}):
+        res.status(400).json({success: false, message: 'could not add new'})
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
 })
 
 router.put('/:id', (req, res) => {
@@ -56,6 +65,14 @@ function validateCohortID(req, res, next) {
         res.status(500).json(errorRef(err))
     })
 } 
+
+function validateBodyName(req, res, next) {
+    if(req.body.name){
+        next()
+    }else{
+        res.send('name field required!')
+    }
+}
 
 
 
