@@ -15,6 +15,7 @@ function find() {
 function findById(id) {
     return db('cohorts')
     .where({id})
+    .first()
 } 
 
 function add() {
