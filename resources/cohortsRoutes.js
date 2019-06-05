@@ -15,18 +15,47 @@ router.get('/', (req, res) => {
         res.status(500).json(errorRef(err))
     })
 })
-router.get('/:id', (req, res) => {
-
+router.get('/:id', validateCohortID, (req, res) => {
+    const {id} = req.params
+    dbCohorts.findById(id)
+    .then(cohort => {
+        cohort ? res.status(200).json({success: true, message: `${cohort.name} with id: ${id} has been located`, cohort}):
+        res.status(404).json({success: false, message: `Sorry, no cohort with id of ${id} exists.`  })
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
 })
+
 router.post('/', (req, res) => {
 
 })
+
 router.put('/:id', (req, res) => {
 
 })
+
 router.delete('/', (req, res) => {
 
 })
+
+// validation middleware
+function validateCohortID(req, res, next) {
+    // console.log(req.params)
+    db.find(req.params.id)
+    .then(cohort => {
+        if(cohort){ 
+        req.cohort = cohort
+        next()
+        }else{
+            res.status(400).json({ message: 'Invalid cohort id!' })
+        }
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
+} 
+
 
 
 // error middleware

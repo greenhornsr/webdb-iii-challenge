@@ -8,22 +8,23 @@ module.exports = {
     remove
 }
 
-function find (){
+function find() {
     return db('cohorts')
 } 
 
-function findById (){
+function findById(id) {
+    return db('cohorts')
+    .where({id})
+} 
+
+function add() {
     return null
 } 
 
-function add (){
+function update() {
     return null
 } 
 
-function update (){
-    return null
-} 
-
-function remove (){
+function remove() {
     return null
 } 
