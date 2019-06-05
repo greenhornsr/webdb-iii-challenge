@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const cohorts = require('./resources/cohortsRoutes');
 
 
 // creates my express application
@@ -7,9 +8,7 @@ const server = express();
 
 // specify middleware to be used and on what routes
 server.use(helmet());
-server.use('/api/cohorts', logger 
-// addroutes file
-)
+server.use('/api/cohorts', logger, cohorts)
 
 // landing page - confirm ive hit my root route
 server.get('/', (req, res) => {
