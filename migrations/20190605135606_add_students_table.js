@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
         .unsigned()
         .references('id')
         .inTable('cohorts')
-        .onDelete('CASCADE')
+        .onDelete('RESTRICT')
         .onUpdate('CASCADE')
 
         tbl
